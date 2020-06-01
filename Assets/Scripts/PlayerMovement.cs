@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -32,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 cacheCamEndPos;
     [HideInInspector]
     public float deathProgress = 0;
-    public float deathTime = 2;
+    public float deathTime = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -64,9 +63,10 @@ public class PlayerMovement : MonoBehaviour
             deathProgress += Time.fixedDeltaTime / deathTime;
             if (deathProgress < deathTime)
             {
-                print(deathProgress);
-                cameraPosTf.position = Vector3.Lerp(cacheCamStartPos, cacheCamEndPos, deathProgress);
+                print(planeRb.velocity);
+                cameraPosTf.position = Vector3.MoveTowards(cameraPosTf.position, cacheCamEndPos, 0.7f * Time.fixedDeltaTime);
                 planeRb.velocity = planeTf.forward * Mathf.SmoothStep(moveSpeed, 0f, deathProgress);
+                planeRb.velocity += Physics.gravity * Mathf.Lerp(0, 1, deathProgress);
                 planeRb.useGravity = true;
             }
         }

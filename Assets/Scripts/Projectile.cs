@@ -24,10 +24,12 @@ public class Projectile : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Player hitPlayer = collision.transform.GetComponentInParent<Player>();
-        if (hitPlayer == owner || hitPlayer == null) return;
+        if (hitPlayer == owner) return;
+
         if (hitPlayer != owner)
         {
             hitPlayer.health -= damage;
         }
+        Destroy(gameObject);
     }
 }

@@ -18,7 +18,7 @@ public class Spawner : NetworkBehaviour
     {
         foreach (GameObject pickup in activeObjects)
         {
-            DisablePickup(pickup);
+            RpcDisablePickup(pickup);
         }
     }
 
@@ -29,12 +29,12 @@ public class Spawner : NetworkBehaviour
         activeCount = activeObjects.Count;
         while (inactiveCount / (inactiveCount + activeCount) < spawnProportion) 
         {
-            EnablePickup(inactiveObjects[Random.Range(0, inactiveObjects.Count)]);
+            RpcEnablePickup(inactiveObjects[Random.Range(0, inactiveObjects.Count)]);
         }
     }
 
     [ClientRpc]
-    public void EnablePickup(GameObject pickup)
+    public void RpcEnablePickup(GameObject pickup)
     {
         pickup.SetActive(true);
         inactiveObjects.Remove(pickup);
@@ -42,7 +42,7 @@ public class Spawner : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void DisablePickup(GameObject pickup)
+    public void RpcDisablePickup(GameObject pickup)
     {
         pickup.SetActive(false);
         activeObjects.Remove(pickup);

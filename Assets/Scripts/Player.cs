@@ -9,6 +9,11 @@ public class Player : MonoBehaviour
     PlayerMovement movement;
     bool dead;
 
+    float shootTimer;
+    float timeBetweenShots = 1f;
+
+    public GameObject projectilePrefab;
+
     private void Awake()
     {
         movement = GetComponent<PlayerMovement>();
@@ -20,11 +25,18 @@ public class Player : MonoBehaviour
         {
             dead = true;
             movement.controllable = false;
-            movement.cacheCamStartPos = movement.cameraPosTf.position;
-            print(movement.cacheCamStartPos);
-            movement.cacheCamEndPos = movement.cameraPosTf.position + movement.cameraPosTf.forward * 2;
-            movement.cacheSpeed = movement.plane.transform.forward * movement.moveSpeed;
+
             movement.deathProgress = 0;
+
+            movement.cacheCamStartPos = movement.cameraPosTf.position;
+            movement.cacheCamEndPos = movement.cameraPosTf.position + movement.cameraPosTf.forward * 1.5f;
+            movement.cacheSpeed = movement.plane.transform.forward * movement.moveSpeed;
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            GameObject projectile = Instantiate(projectilePrefab, movement.plane.transform.position, movement.plane.transform.rotation);
+            projectile.GetComponent<Projectile>().owner = this;
         }
     }
 }
