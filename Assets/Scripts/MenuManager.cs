@@ -34,4 +34,14 @@ public class MenuManager : MonoBehaviour
     {
         nm.StartClient();
     }
+
+    public void HostServer()
+    {
+        nm.StartServer();
+    }
+
+    public void test()
+    {
+        
+    }
 }
