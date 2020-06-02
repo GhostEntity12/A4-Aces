@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            GameObject projectile = Instantiate(projectilePrefab, movement.plane.transform.position, movement.plane.transform.rotation);
+            GameObject projectile = Instantiate(projectilePrefab, movement.plane.transform.position + movement.plane.transform.forward * 0.3f, movement.plane.transform.rotation);
             projectile.GetComponent<Projectile>().owner = this;
         }
     }

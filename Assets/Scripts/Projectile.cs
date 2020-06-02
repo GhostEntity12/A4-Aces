@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Projectile : MonoBehaviour
 {
     public Player owner;
     [Min(2)]
-    public float speed;
+    public float speed = 2;
     public float damage;
     public Rigidbody rb;
     Transform projectileTf;
@@ -26,7 +27,7 @@ public class Projectile : MonoBehaviour
         Player hitPlayer = collision.transform.GetComponentInParent<Player>();
         if (hitPlayer == owner) return;
 
-        if (hitPlayer != owner)
+        if (hitPlayer != owner && hitPlayer != null)
         {
             hitPlayer.health -= damage;
         }

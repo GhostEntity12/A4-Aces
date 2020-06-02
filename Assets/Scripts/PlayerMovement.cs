@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     {
         planeRb = plane.GetComponent<Rigidbody>();
         planeTf = plane.transform;
-        camCache = cameraPosTf.transform.position;
+        camCache = cameraPosTf.transform.position - planeTf.position;
         planeRb.angularDrag = recoverySpeed;
     }
 

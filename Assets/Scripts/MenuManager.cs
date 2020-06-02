@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
+
+//public enum Scene
+//{
+//    Office,
+//    Room
+//}
 
 public class MenuManager : MonoBehaviour
 {
@@ -25,18 +32,16 @@ public class MenuManager : MonoBehaviour
         
     }
 
-    public void HostLan()
-    {
-        nm.StartHost();
-    }
-
     public void JoinLan()
     {
         nm.StartClient();
     }
 
-    public void HostServer()
+    public void HostServer(/*Scene*/string scene)
     {
+        if (!SceneManager.GetSceneByName(scene).IsValid())
+            throw new System.Exception($"Attempted to load invalid scene \"{scene}\"");
+        nm.onlineScene = scene;//.ToString();
         nm.StartServer();
     }
 
