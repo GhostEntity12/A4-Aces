@@ -27,8 +27,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1995567084967152217}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 60, y: 1, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 54, y: 1, z: -29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -210,24 +210,24 @@ MonoBehaviour:
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 3, y: 0, z: 0}
-  - {x: 0, y: 10, z: 0}
-  - {x: 3, y: 10, z: 0}
+  - {x: 0, y: 5, z: 0}
+  - {x: 3, y: 5, z: 0}
   - {x: 3, y: 0, z: 0}
   - {x: 3, y: 0, z: -3}
-  - {x: 3, y: 10, z: 0}
-  - {x: 3, y: 10, z: -3}
+  - {x: 3, y: 5, z: 0}
+  - {x: 3, y: 5, z: -3}
   - {x: 3, y: 0, z: -3}
   - {x: 0, y: 0, z: -3}
-  - {x: 3, y: 10, z: -3}
-  - {x: 0, y: 10, z: -3}
+  - {x: 3, y: 5, z: -3}
+  - {x: 0, y: 5, z: -3}
   - {x: 0, y: 0, z: -3}
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 10, z: -3}
-  - {x: 0, y: 10, z: 0}
-  - {x: 0, y: 10, z: 0}
-  - {x: 3, y: 10, z: 0}
-  - {x: 0, y: 10, z: -3}
-  - {x: 3, y: 10, z: -3}
+  - {x: 0, y: 5, z: -3}
+  - {x: 0, y: 5, z: 0}
+  - {x: 0, y: 5, z: 0}
+  - {x: 3, y: 5, z: 0}
+  - {x: 0, y: 5, z: -3}
+  - {x: 3, y: 5, z: -3}
   - {x: 0, y: 0, z: -3}
   - {x: 3, y: 0, z: -3}
   - {x: 0, y: 0, z: 0}
@@ -235,20 +235,20 @@ MonoBehaviour:
   m_Textures0:
   - {x: 0, y: 0}
   - {x: -3, y: 0}
-  - {x: 0, y: 10}
-  - {x: -3, y: 10}
+  - {x: 0, y: 5}
+  - {x: -3, y: 5}
   - {x: 0, y: 0}
   - {x: -3, y: 0}
-  - {x: 0, y: 10}
-  - {x: -3, y: 10}
+  - {x: 0, y: 5}
+  - {x: -3, y: 5}
   - {x: 3, y: 0}
   - {x: 0, y: 0}
-  - {x: 3, y: 10}
-  - {x: 0, y: 10}
+  - {x: 3, y: 5}
+  - {x: 0, y: 5}
   - {x: 3, y: 0}
   - {x: 0, y: 0}
-  - {x: 3, y: 10}
-  - {x: 0, y: 10}
+  - {x: 3, y: 5}
+  - {x: 0, y: 5}
   - {x: 0, y: 0}
   - {x: 3, y: 0}
   - {x: 0, y: -3}

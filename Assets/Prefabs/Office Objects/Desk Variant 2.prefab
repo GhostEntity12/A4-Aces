@@ -23,11 +23,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6280074949835281771}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2327385904924870958}
+  - {fileID: 5507202273903542123}
   - {fileID: 3200959932016954310}
   - {fileID: 1485451761913028301}
   - {fileID: 2956515615858095443}
@@ -409,11 +409,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stapler
       objectReference: {fileID: 0}
+    - target: {fileID: 8622993401860933322, guid: e27d7af262aab9841a97df96a46a31ff,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8622993401860933322, guid: e27d7af262aab9841a97df96a46a31ff,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8622993401860933322, guid: e27d7af262aab9841a97df96a46a31ff,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 12.987426
+      objectReference: {fileID: 0}
+    - target: {fileID: 8622993401860933322, guid: e27d7af262aab9841a97df96a46a31ff,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.878
+      objectReference: {fileID: 0}
+    - target: {fileID: 8622993401860933322, guid: e27d7af262aab9841a97df96a46a31ff,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.255675
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e27d7af262aab9841a97df96a46a31ff, type: 3}
---- !u!4 &2327385904924870958 stripped
+--- !u!4 &5507202273903542123 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1984412482546397327, guid: e27d7af262aab9841a97df96a46a31ff,
+  m_CorrespondingSourceObject: {fileID: 8622993401860933322, guid: e27d7af262aab9841a97df96a46a31ff,
     type: 3}
   m_PrefabInstance: {fileID: 4307276903398193569}
   m_PrefabAsset: {fileID: 0}
