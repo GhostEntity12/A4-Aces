@@ -23,7 +23,7 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -41,7 +41,7 @@ public class MenuManager : MonoBehaviour
     {
         if (!SceneManager.GetSceneByName(scene).IsValid())
             throw new System.Exception($"Attempted to load invalid scene \"{scene}\"");
-        nm.onlineScene = scene;//.ToString();
+        nm.onlineScene = scene;
         nm.StartServer();
     }
 
