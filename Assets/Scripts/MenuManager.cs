@@ -13,6 +13,7 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
     public NetworkManager nm;
+    public OnlineMatchMaker omm;
 
     public GameObject menu;
     public GameObject menuPlayers;
@@ -40,13 +41,15 @@ public class MenuManager : MonoBehaviour
     public void HostServer(/*Scene*/string scene)
     {
         if (!SceneManager.GetSceneByName(scene).IsValid())
-            throw new System.Exception($"Attempted to load invalid scene \"{scene}\"");
+            throw new System.Exception($"Attempted to load invalid scene \"{scene}\" when creating room");
         nm.onlineScene = scene;
         nm.StartServer();
     }
 
-    public void test()
+    public void JoinOnline(string scene)
     {
-        
+        if (!SceneManager.GetSceneByName(scene).IsValid())
+            throw new System.Exception($"Attempted to load invalid scene \"{scene}\" when joining online");
+        omm.FindInternetMatch(scene);
     }
 }

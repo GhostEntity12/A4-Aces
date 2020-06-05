@@ -3,19 +3,52 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using UnityEngine.Networking.Match;
 using UnityEngine;
-using System.Text.RegularExpressions;
 
 public class OnlineMatchMaker : MonoBehaviour
 {
+    string sceneName;
+
     void Start()
     {
         NetworkManager.singleton.StartMatchMaker();
+    }
+
+    //call this method to find a match through the matchmaker
+    public void FindInternetMatch(string matchName)
+    {
+        NetworkManager.singleton.matchMaker.ListMatches(0, 10, matchName, true, 0, 0, OnInternetMatchList);
+        sceneName = matchName;
+    }
+
+    //this method is called when a list of matches is returned
+    private void OnInternetMatchList(bool success, string extendedInfo, List<MatchInfoSnapshot> matches)
+    {
+        if (success)
+        {
+            if (matches.Count != 0)
+            {
+                //Debug.Log("A list of matches was returned");
+
+                //join the last server (just in case there are two...)
+                NetworkManager.singleton.matchMaker.JoinMatch(matches[matches.Count - 1].networkId, "", "", "", 0, 0, OnJoinInternetMatch);
+            }
+            else
+            {
+                Debug.Log("No matches in requested room! Creating match instead.");
+                CreateInternetMatch(sceneName);
+            }
+        }
+        else
+        {
+            Debug.LogError("Couldn't connect to match maker");
+        }
     }
 
     //call this method to request a match to be created on the server
     public void CreateInternetMatch(string matchName)
     {
         NetworkManager.singleton.matchMaker.CreateMatch(matchName, 4, true, "", "", "", 0, 0, OnInternetMatchCreate);
+        sceneName = matchName;
     }
 
     //this method is called when your request for creating a match is returned
@@ -33,35 +66,6 @@ public class OnlineMatchMaker : MonoBehaviour
         else
         {
             Debug.LogError("Create match failed");
-        }
-    }
-
-    //call this method to find a match through the matchmaker
-    public void FindInternetMatch(string matchName)
-    {
-        NetworkManager.singleton.matchMaker.ListMatches(0, 10, matchName, true, 0, 0, OnInternetMatchList);
-    }
-
-    //this method is called when a list of matches is returned
-    private void OnInternetMatchList(bool success, string extendedInfo, List<MatchInfoSnapshot> matches)
-    {
-        if (success)
-        {
-            if (matches.Count != 0)
-            {
-                //Debug.Log("A list of matches was returned");
-
-                //join the last server (just in case there are two...)
-                NetworkManager.singleton.matchMaker.JoinMatch(matches[matches.Count - 1].networkId, "", "", "", 0, 0, OnJoinInternetMatch);
-            }
-            else
-            {
-                Debug.Log("No matches in requested room!");
-            }
-        }
-        else
-        {
-            Debug.LogError("Couldn't connect to match maker");
         }
     }
 
