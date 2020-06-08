@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using UnityEngine.Networking.Match;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OnlineMatchMaker : MonoBehaviour
 {
@@ -16,8 +17,8 @@ public class OnlineMatchMaker : MonoBehaviour
     //call this method to find a match through the matchmaker
     public void FindInternetMatch(string matchName)
     {
-        NetworkManager.singleton.matchMaker.ListMatches(0, 10, matchName, true, 0, 0, OnInternetMatchList);
         sceneName = matchName;
+        NetworkManager.singleton.matchMaker.ListMatches(0, 10, matchName, true, 0, 0, OnInternetMatchList);
     }
 
     //this method is called when a list of matches is returned
@@ -47,8 +48,15 @@ public class OnlineMatchMaker : MonoBehaviour
     //call this method to request a match to be created on the server
     public void CreateInternetMatch(string matchName)
     {
-        NetworkManager.singleton.matchMaker.CreateMatch(matchName, 4, true, "", "", "", 0, 0, OnInternetMatchCreate);
         sceneName = matchName;
+        
+        if (!MenuManager.scenesInBuild.Contains(sceneName)) 
+        {
+            Debug.LogError($"Attempted to load invalid scene \"{sceneName}\" when joining online");
+            return;
+        }
+        NetworkManager.singleton.onlineScene = sceneName;
+        NetworkManager.singleton.matchMaker.CreateMatch(matchName, 4, true, "", "", "", 0, 0, OnInternetMatchCreate);
     }
 
     //this method is called when your request for creating a match is returned

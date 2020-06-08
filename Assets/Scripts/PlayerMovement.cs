@@ -1,27 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Mesh")]
     public GameObject plane;
     Rigidbody planeRb;
     Transform planeTf;
 
+    [Header("Camera")]
     public Transform cameraPosTf;
     public Transform cameraRotTf;
+    Vector3 camCache;
 
+    [Header("Stats")]
     public float turnSpeed = 100f;
     public float moveSpeed = 2f;
     public float recoverySpeed = 5f;
 
-    Vector3 currentVelocity = Vector3.zero;
-    Vector3 rotDirection;
+    [Header("Movement")]
     Quaternion rotDiff;
     float size;
 
-    Vector3 camCache;
-
+    [Header("Death handling")]
     public bool controllable = true;
     [HideInInspector]
     public Vector3 cacheSpeed;
@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Setting variables
         planeRb = plane.GetComponent<Rigidbody>();
         planeTf = plane.transform;
         camCache = cameraPosTf.transform.position - planeTf.position;

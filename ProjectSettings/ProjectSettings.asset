@@ -762,10 +762,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: deef747a-d4cc-41d2-b1a8-933b25d7aeee
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: A4 Aces
+  organizationId: ghostentity12
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

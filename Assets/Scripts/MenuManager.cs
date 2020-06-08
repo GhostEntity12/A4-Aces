@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    public NetworkManager nm;
+    NetworkManager nm;
     public OnlineMatchMaker omm;
 
     public GameObject menu;
@@ -21,16 +21,19 @@ public class MenuManager : MonoBehaviour
     public GameObject menuLan;
     public GameObject menuWiFi;
 
-    // Start is called before the first frame update
-    void Start()
+    [HideInInspector]
+    public static List<string> scenesInBuild;
+    private void Awake()
     {
+        nm = NetworkManager.singleton;
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        scenesInBuild = new List<string>();
+        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
+        {
+            string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
+            int lastSlash = scenePath.LastIndexOf("/");
+            scenesInBuild.Add(scenePath.Substring(lastSlash + 1, scenePath.LastIndexOf(".") - lastSlash - 1));
+        }
     }
 
     public void JoinLan()
@@ -38,18 +41,24 @@ public class MenuManager : MonoBehaviour
         nm.StartClient();
     }
 
-    public void HostServer(/*Scene*/string scene)
+    public void HostServer(string scene)
     {
-        if (!SceneManager.GetSceneByName(scene).IsValid())
-            throw new System.Exception($"Attempted to load invalid scene \"{scene}\" when creating room");
+        if (!scenesInBuild.Contains(scene))
+        {
+            Debug.LogError($"Attempted to load invalid scene \"{scene}\" when creating room");
+            return;
+        }
         nm.onlineScene = scene;
         nm.StartServer();
     }
 
     public void JoinOnline(string scene)
     {
-        if (!SceneManager.GetSceneByName(scene).IsValid())
-            throw new System.Exception($"Attempted to load invalid scene \"{scene}\" when joining online");
+        if (!scenesInBuild.Contains(scene))
+        {
+            Debug.LogError($"Attempted to load invalid scene \"{scene}\" when joining online");
+            return;
+        }
         omm.FindInternetMatch(scene);
     }
 }

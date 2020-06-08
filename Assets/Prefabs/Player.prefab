@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 5755091179721707409}
   - component: {fileID: 5755091179721707411}
   - component: {fileID: 5755091179721707408}
+  - component: {fileID: 4226101027597191875}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -204,7 +205,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 958c353b85fb8a74c84bf83855a5ad17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  currentHealth: 100
+  maxHealth: 100
+  timeBetweenShots: 1
   projectilePrefab: {fileID: 7590428819389915598, guid: 925591bf1e7d1fd4fb106d3d50e9d3de,
     type: 3}
 --- !u!114 &5755091179721707408
@@ -231,6 +234,39 @@ MonoBehaviour:
   cacheCamEndPos: {x: 0, y: 0, z: 0}
   deathProgress: 0
   deathTime: 2
+--- !u!114 &4226101027597191875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5755091179721703534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!1 &5755091180175702517
 GameObject:
   m_ObjectHideFlags: 0
