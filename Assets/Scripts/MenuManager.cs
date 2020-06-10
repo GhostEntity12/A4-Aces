@@ -14,6 +14,7 @@ public class MenuManager : MonoBehaviour
 {
     NetworkManager nm;
     public OnlineMatchMaker omm;
+    SceneSetupManager ssm;
 
     public GameObject menu;
     public GameObject menuPlayers;
@@ -36,11 +37,18 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Join a local network game
+    /// </summary>
     public void JoinLan()
     {
         nm.StartClient();
     }
 
+    /// <summary>
+    /// Start a local network game
+    /// </summary>
+    /// <param name="scene"></param>
     public void HostServer(string scene)
     {
         if (!scenesInBuild.Contains(scene))
@@ -52,6 +60,10 @@ public class MenuManager : MonoBehaviour
         nm.StartServer();
     }
 
+    /// <summary>
+    /// Join the online lobby
+    /// </summary>
+    /// <param name="scene"></param>
     public void JoinOnline(string scene)
     {
         if (!scenesInBuild.Contains(scene))
@@ -60,5 +72,20 @@ public class MenuManager : MonoBehaviour
             return;
         }
         omm.FindInternetMatch(scene);
+    }
+
+    /// <summary>
+    /// Start a singleplayer game
+    /// </summary>
+    /// <param name="scene"></param>
+    public void StartSingleplayer(string scene)
+    {
+        if (!scenesInBuild.Contains(scene))
+        {
+            Debug.LogError($"Attempted to load invalid scene \"{scene}\" when starting singleplayer");
+            return;
+        }
+        ssm.loadInSingleplayer = true;
+        SceneManager.LoadScene(name);
     }
 }

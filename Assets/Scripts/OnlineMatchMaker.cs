@@ -9,15 +9,21 @@ public class OnlineMatchMaker : MonoBehaviour
 {
     string sceneName;
 
-    void Start()
+    void OnEnable()
     {
         NetworkManager.singleton.StartMatchMaker();
+    }
+
+    private void OnApplicationQuit()
+    {
+        NetworkManager.singleton.StopMatchMaker();
     }
 
     //call this method to find a match through the matchmaker
     public void FindInternetMatch(string matchName)
     {
         sceneName = matchName;
+        print(matchName);
         NetworkManager.singleton.matchMaker.ListMatches(0, 10, matchName, true, 0, 0, OnInternetMatchList);
     }
 

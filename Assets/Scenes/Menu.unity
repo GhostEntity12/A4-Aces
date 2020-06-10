@@ -190,6 +190,8 @@ GameObject:
   - component: {fileID: 651854654}
   - component: {fileID: 651854653}
   - component: {fileID: 651854652}
+  - component: {fileID: 651854656}
+  - component: {fileID: 651854657}
   m_Layer: 0
   m_Name: MenuManager
   m_TagString: Untagged
@@ -220,7 +222,7 @@ MonoBehaviour:
   m_LogLevel: 2
   m_PlayerPrefab: {fileID: 5755091179721703534, guid: c36db334bd5c6614baf14a0cf00ea7ce,
     type: 3}
-  m_AutoCreatePlayer: 1
+  m_AutoCreatePlayer: 0
   m_PlayerSpawnMethod: 0
   m_OfflineScene: 
   m_OnlineScene: 
@@ -324,6 +326,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &651854656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651854651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 629243ac00bbee54481fb92600fad8bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadInSingleplayer: 0
+  singleplayerEnabledLevels:
+  - Noah
+  - James
+--- !u!114 &651854657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651854651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4394a3eef724546f896557197e2d6c44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 0}
+  showGUI: 1
+  offsetX: 0
+  offsetY: 0
 --- !u!1 &1082475143
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,7 +603,7 @@ MonoBehaviour:
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: James
+            m_StringArgument: Noah
             m_BoolArgument: 0
           m_CallState: 2
 --- !u!1 &1611920445
