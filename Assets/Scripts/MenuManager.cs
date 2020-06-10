@@ -2,90 +2,73 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
+using Photon.Pun;
+using Photon.Realtime;
+using TMPro;
 
-//public enum Scene
-//{
-//    Office,
-//    Room
-//}
-
-public class MenuManager : MonoBehaviour
+public class MenuManager : MonoBehaviourPunCallbacks
 {
-    NetworkManager nm;
-    public OnlineMatchMaker omm;
-    SceneSetupManager ssm;
+    string gameVersion;
 
-    public GameObject menu;
-    public GameObject menuPlayers;
-    public GameObject menuConnection;
-    public GameObject menuLan;
-    public GameObject menuWiFi;
+    public TextMeshPro connectButton;
+    public TextMeshPro connectingText;
 
-    [HideInInspector]
-    public static List<string> scenesInBuild;
-    private void Awake()
+    public TextMeshPro room1Text;
+    public TextMeshPro room2Text;
+
+    public string room;
+
+    bool isConnecting;
+
+    // Start is called before the first frame update
+    void Awake()
     {
-        nm = NetworkManager.singleton;
-
-        scenesInBuild = new List<string>();
-        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
+        gameVersion = Application.version;
+        PhotonNetwork.AutomaticallySyncScene = true;
+        if (PhotonNetwork.IsConnected)
         {
-            string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
-            int lastSlash = scenePath.LastIndexOf("/");
-            scenesInBuild.Add(scenePath.Substring(lastSlash + 1, scenePath.LastIndexOf(".") - lastSlash - 1));
+            PhotonNetwork.Disconnect();
         }
     }
 
-    /// <summary>
-    /// Join a local network game
-    /// </summary>
-    public void JoinLan()
+    public void Connect()
     {
-        nm.StartClient();
+        print(PhotonNetwork.IsConnected);
+        connectingText.text = "Connecting to PUN's multiplayer services...";
+        if (!PhotonNetwork.IsConnected)
+        {
+            connectButton.gameObject.SetActive(false);
+            connectingText.gameObject.SetActive(true);
+            print("Connecting to Photon Servers");
+            isConnecting = PhotonNetwork.ConnectUsingSettings();
+            PhotonNetwork.GameVersion = gameVersion;
+        }
     }
 
-    /// <summary>
-    /// Start a local network game
-    /// </summary>
-    /// <param name="scene"></param>
-    public void HostServer(string scene)
+    public override void OnConnectedToMaster()
     {
-        if (!scenesInBuild.Contains(scene))
+        if (isConnecting)
         {
-            Debug.LogError($"Attempted to load invalid scene \"{scene}\" when creating room");
-            return;
+            connectingText.gameObject.SetActive(false);
+            room1Text.gameObject.SetActive(true);
+            room2Text.gameObject.SetActive(true);
+            isConnecting = false;
         }
-        nm.onlineScene = scene;
-        nm.StartServer();
     }
 
-    /// <summary>
-    /// Join the online lobby
-    /// </summary>
-    /// <param name="scene"></param>
-    public void JoinOnline(string scene)
+    public void JoinRoom(string _room)
     {
-        if (!scenesInBuild.Contains(scene))
-        {
-            Debug.LogError($"Attempted to load invalid scene \"{scene}\" when joining online");
-            return;
-        }
-        omm.FindInternetMatch(scene);
+        room = _room;
+        PhotonNetwork.JoinOrCreateRoom(room, new RoomOptions { MaxPlayers = 20 }, null);
     }
 
-    /// <summary>
-    /// Start a singleplayer game
-    /// </summary>
-    /// <param name="scene"></param>
-    public void StartSingleplayer(string scene)
+    public override void OnJoinedRoom()
     {
-        if (!scenesInBuild.Contains(scene))
-        {
-            Debug.LogError($"Attempted to load invalid scene \"{scene}\" when starting singleplayer");
-            return;
-        }
-        ssm.loadInSingleplayer = true;
-        SceneManager.LoadScene(name);
+        PhotonNetwork.LoadLevel(room);
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        connectingText.text = $"Disconnected from PUN servers: {cause}";
     }
 }

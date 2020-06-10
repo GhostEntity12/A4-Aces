@@ -1,10 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using Photon.Pun;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(PlayerMovement))]
-public class Player : MonoBehaviour
+public class Player : MonoBehaviourPun, IPunObservable
 {
     [Tooltip("Script that deals with the player's movement")]
     PlayerMovement movement;
+    public List<Behaviour> playerInputsAndBehaviours = new List<Behaviour>();
 
     [Header("Stats")]
     [Tooltip("How much health the player has")]
@@ -13,38 +17,50 @@ public class Player : MonoBehaviour
     public float maxHealth = 100;
     [Tooltip("Exists to make sure the death event only triggers once")]
     bool dead;
+    [Tooltip("Keeps track of the score in singleplayer")]
+    int score;
 
     [Header("Projectiles")]
     [Tooltip("The minimum time between shots")]
     public float timeBetweenShots = 1f;
     [Tooltip("Timer for how long since the last shot")]
     float shootTimer;
+    [Tooltip("How much ammo the player currently has")]
+    int ammo = 10;
 
-    [Tooltip("The prefab that ")]
+    [Tooltip("The prefab that prjectiles are spawned from")]
     public GameObject projectilePrefab;
+
 
     private void Awake()
     {
-        // Setting variables
-        movement = GetComponent<PlayerMovement>();
+        if (photonView.IsMine)
+        {
+            foreach (Behaviour behaviour in playerInputsAndBehaviours)
+            {
+                behaviour.enabled = true;
+            }
+            // Setting variables
+            movement = GetComponent<PlayerMovement>();
 
-        // Error checking
-        Projectile projectileScript = projectilePrefab.GetComponent<Projectile>();
-        print(projectileScript);
-        // Missing script
-        if (projectileScript == null)
-        {
-            Debug.LogError("Projectile prefab needs a Projectile component!");
-        }
-        // Invalid speed
-        else if (projectileScript.speed <= movement.moveSpeed)
-        {
-            Debug.LogError($"Projectile movement speed ({projectileScript.speed}) should be larger than the player's movement speed ({movement.moveSpeed})!");
+            // Error checking
+            Projectile projectileScript = projectilePrefab.GetComponent<Projectile>();
+            // Missing script
+            if (projectileScript == null)
+            {
+                Debug.LogError("Projectile prefab needs a Projectile component!");
+            }
+            // Invalid speed
+            else if (projectileScript.speed <= movement.moveSpeed)
+            {
+                Debug.LogError($"Projectile movement speed ({projectileScript.speed}) should be larger than the player's movement speed ({movement.moveSpeed})!");
+            }
         }
     }
 
     private void Update()
     {
+        if (!photonView.IsMine) return;
         // On start death
         if (currentHealth <= 0 && !dead)
         {
@@ -60,7 +76,7 @@ public class Player : MonoBehaviour
             movement.cacheSpeed = movement.plane.transform.forward * movement.moveSpeed;
         }
 
-        if (shootTimer >= timeBetweenShots)
+        if (shootTimer >= timeBetweenShots && ammo > 0)
         {
             // On tap
             if (Input.GetMouseButton(0))
@@ -69,7 +85,7 @@ public class Player : MonoBehaviour
                 shootTimer = 0;
 
                 // Spawn projectile
-                GameObject projectile = Instantiate(projectilePrefab, movement.plane.transform.position, movement.plane.transform.rotation);
+                GameObject projectile = PhotonNetwork.Instantiate(projectilePrefab.name, movement.plane.transform.position, movement.plane.transform.rotation);
                 // Set owner
                 projectile.GetComponent<Projectile>().owner = this;
                 // Ignore collisions between the projectile and the owner
@@ -82,6 +98,26 @@ public class Player : MonoBehaviour
         {
             // Increments timer
             shootTimer += Time.deltaTime;
+        }
+    }
+
+    public void AddScore(int scoreToAdd)
+    {
+        score += scoreToAdd;
+        // TODO: Update Score UI
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // Client player, send data
+            stream.SendNext(currentHealth);
+        }
+        else
+        {
+            // Network player, receive data
+            this.currentHealth = (float)stream.ReceiveNext();
         }
     }
 }
