@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Projectile : MonoBehaviour
 {
+    public Gamemode gamemode;
     public Player owner;
     [Min(2), Tooltip("Speed of the projectile. Should be larger than the player's movement speed")]
     public float speed = 2;
@@ -31,7 +32,14 @@ public class Projectile : MonoBehaviour
         life += Time.deltaTime;
         if (life >= lifetime)
         {
-            PhotonNetwork.Destroy(gameObject);
+            if (gamemode == Gamemode.Multiplayer)
+            {
+                PhotonNetwork.Destroy(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

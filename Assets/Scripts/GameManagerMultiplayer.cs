@@ -6,9 +6,9 @@ using Photon.Pun;
 using System.Net.Sockets;
 using System.Linq;
 
-public class GameManager : MonoBehaviour
+public class GameManagerMultiplayer : MonoBehaviour
 {
-    public static GameManager instance;
+    public static GameManagerMultiplayer instance;
 
     public GameObject[] planes;
 
@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)].transform;
 
         GameObject player = PhotonNetwork.Instantiate(planes[Random.Range(0, planes.Length)].name, spawnPoint.position, spawnPoint.rotation);
+        player.GetComponent<Player>().mode = Gamemode.Multiplayer;
     }
 
     public void LeaveRoom()
