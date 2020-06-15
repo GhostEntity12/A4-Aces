@@ -34,7 +34,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void Awake()
     {
-        if (photonView.IsMine)
+        if (photonView.IsMine || !PhotonNetwork.IsConnected)
         {
             foreach (Behaviour behaviour in playerInputsAndBehaviours)
             {
@@ -60,7 +60,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void Update()
     {
-        if (!photonView.IsMine) return;
+        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
         // On start death
         if (currentHealth <= 0 && !dead)
         {

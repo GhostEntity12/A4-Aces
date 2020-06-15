@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneSetupManager : MonoBehaviour
+public class SingleplayerManager : MonoBehaviour
 {
     public bool loadInSingleplayer;
     public List<string> singleplayerEnabledLevels;

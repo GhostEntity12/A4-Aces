@@ -6,10 +6,21 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 
+public enum MenuState
+{
+    Gamemode,
+    SPLevels,
+    Online
+}
 public class MenuManager : MonoBehaviourPunCallbacks
 {
     string gameVersion;
 
+    GameObject currentState;
+
+    [Header("Singleplayer")]
+
+    [Header("Online")]
     public TextMeshPro connectButton;
     public TextMeshPro connectingText;
 
@@ -31,9 +42,13 @@ public class MenuManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void ReturnToMain()
+    {
+
+    }
+
     public void Connect()
     {
-        print(PhotonNetwork.IsConnected);
         connectingText.text = "Connecting to PUN's multiplayer services...";
         if (!PhotonNetwork.IsConnected)
         {

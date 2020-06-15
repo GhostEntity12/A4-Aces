@@ -5,7 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public Player owner;
-    [Min(2), Tooltip("Speed of the projectile. Should be larger than the playr's movement speed")]
+    [Min(2), Tooltip("Speed of the projectile. Should be larger than the player's movement speed")]
     public float speed = 2;
     public float damage;
     public float lifetime = 40f;
