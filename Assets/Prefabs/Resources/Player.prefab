@@ -45,10 +45,10 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 0
+  Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 4043812462904781703}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -207,7 +207,7 @@ GameObject:
   - component: {fileID: 5755091179721707411}
   - component: {fileID: 5755091179721707408}
   - component: {fileID: 6034247409171658653}
-  - component: {fileID: 2756858811887077628}
+  - component: {fileID: 1782341052689659070}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -246,6 +246,7 @@ MonoBehaviour:
   playerInputsAndBehaviours:
   - {fileID: 5755091179151815508}
   - {fileID: 5755091179721707408}
+  planeMesh: {fileID: 0}
   currentHealth: 100
   maxHealth: 100
   timeBetweenShots: 1
@@ -293,11 +294,11 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 2756858811887077628}
+  - {fileID: 1782341052689659070}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &2756858811887077628
+--- !u!114 &1782341052689659070
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

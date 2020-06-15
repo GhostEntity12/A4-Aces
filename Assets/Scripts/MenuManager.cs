@@ -5,27 +5,25 @@ using UnityEngine.Networking;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
+using System.ComponentModel.Design;
+using UnityEngine.Rendering;
 
-public enum MenuState
-{
-    Gamemode,
-    SPLevels,
-    Online
-}
 public class MenuManager : MonoBehaviourPunCallbacks
 {
     string gameVersion;
 
-    GameObject currentState;
+    public string[] levelNames = new string[2] { "Office0", "Office1" };
 
-    [Header("Singleplayer")]
+    public string singleplayerSuffix = "SP";
 
-    [Header("Online")]
-    public TextMeshPro connectButton;
+    [Header("Menus")]
+
+    public GameObject activeStage;
+
+    public GameObject gamemode, singleplayerLevels, multiplayerLevels;
+
+    [Space(20)]
     public TextMeshPro connectingText;
-
-    public TextMeshPro room1Text;
-    public TextMeshPro room2Text;
 
     public string room;
 
@@ -34,6 +32,7 @@ public class MenuManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Awake()
     {
+        activeStage = gamemode;
         gameVersion = Application.version;
         PhotonNetwork.AutomaticallySyncScene = true;
         if (PhotonNetwork.IsConnected)
@@ -44,7 +43,20 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
     public void ReturnToMain()
     {
+        activeStage.SetActive(false);
+        activeStage = gamemode;
+        activeStage.SetActive(true);
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.Disconnect();
+        }
+    }
 
+    public void GoToSubmenuMenu(GameObject menu)
+    {
+        activeStage.SetActive(false);
+        activeStage = menu;
+        activeStage.SetActive(true);
     }
 
     public void Connect()
@@ -52,7 +64,7 @@ public class MenuManager : MonoBehaviourPunCallbacks
         connectingText.text = "Connecting to PUN's multiplayer services...";
         if (!PhotonNetwork.IsConnected)
         {
-            connectButton.gameObject.SetActive(false);
+            gamemode.gameObject.SetActive(false);
             connectingText.gameObject.SetActive(true);
             print("Connecting to Photon Servers");
             isConnecting = PhotonNetwork.ConnectUsingSettings();
@@ -65,15 +77,14 @@ public class MenuManager : MonoBehaviourPunCallbacks
         if (isConnecting)
         {
             connectingText.gameObject.SetActive(false);
-            room1Text.gameObject.SetActive(true);
-            room2Text.gameObject.SetActive(true);
+            GoToSubmenuMenu(multiplayerLevels);
             isConnecting = false;
         }
     }
 
-    public void JoinRoom(string _room)
+    public void JoinRoom(int level)
     {
-        room = _room;
+        room = levelNames[level];
         PhotonNetwork.JoinOrCreateRoom(room, new RoomOptions { MaxPlayers = 20 }, null);
     }
 
@@ -85,5 +96,10 @@ public class MenuManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         connectingText.text = $"Disconnected from PUN servers: {cause}";
+    }
+
+    public void LoadSingleplayer(int level)
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(levelNames[level]);// + singleplayerSuffix);
     }
 }
