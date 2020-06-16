@@ -16,10 +16,10 @@ public class AmmoRefuel : MonoBehaviourPun
     private void OnTriggerEnter(Collider other)
     {
         print(other.gameObject.name);
-        Player p = other.gameObject.GetComponent<Player>();
+        Player p = other.gameObject.GetComponentInParent<Player>();
         if (p == null) return;
 
-        p.ammo += ammoRefuelAmount;
+        p.currentAmmo = Mathf.Min(p.currentAmmo + ammoRefuelAmount, p.maxAmmo);
 
         photonView.RPC("SetState", RpcTarget.AllBufferedViaServer, false);
         Spawner.instance.photonView.RPC("SyncObjectState", RpcTarget.AllBufferedViaServer, new object[] { id, false });

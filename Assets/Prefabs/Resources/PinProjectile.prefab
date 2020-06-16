@@ -125,8 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29bff8e21df46d34a9983cf0635ba487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gamemode: 0
   owner: {fileID: 0}
   speed: 5
   damage: 10
-  rb: {fileID: 0}
   lifetime: 40
+  rb: {fileID: 0}

@@ -14,6 +14,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 {
     [Tooltip("Script that deals with the player's movement")]
     PlayerMovement movement;
+    PlayerUI ui;
     public List<Behaviour> playerInputsAndBehaviours = new List<Behaviour>();
     public Gamemode mode;
 
@@ -32,8 +33,10 @@ public class Player : MonoBehaviourPun, IPunObservable
     public float timeBetweenShots = 1f;
     [Tooltip("Timer for how long since the last shot")]
     float shootTimer;
-    [Tooltip("How much ammo the player currently has")]
-    public int ammo = 10;
+    [Tooltip("How much ammo the player has")]
+    public int currentAmmo = 10;
+    [Tooltip("The maximum ammo the player can have")]
+    public int maxAmmo = 15;
 
     [Tooltip("The prefab that prjectiles are spawned from")]
     public GameObject projectilePrefab;
@@ -96,7 +99,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             movement.cacheSpeed = movement.plane.transform.forward * movement.moveSpeed;
         }
 
-        if (shootTimer >= timeBetweenShots && ammo > 0)
+        if (shootTimer >= timeBetweenShots && currentAmmo > 0)
         {
             // On tap
             if (Input.GetMouseButton(0))
@@ -119,7 +122,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 // Randomise projectile color
                 projectile.GetComponent<Renderer>().materials[0].color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
                 // Reduce ammo
-                ammo--;
+                currentAmmo--;
             }
         }
         else

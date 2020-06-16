@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: New Material 9
+  m_Name: RedPale
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 2
@@ -73,5 +73,5 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.21938412, g: 0.38889253, b: 0.5471698, a: 1}
-    - _EmissionColor: {r: 0.039546248, g: 0.12477186, b: 0.26225072, a: 1}
+    - _Color: {r: 0.5188679, g: 0.32816765, b: 0.31083125, a: 1}
+    - _EmissionColor: {r: 0.23074007, g: 0.088655606, b: 0.07818743, a: 1}
