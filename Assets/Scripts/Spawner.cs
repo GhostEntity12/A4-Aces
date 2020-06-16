@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviourPun
 {
+    public Gamemode gamemode;
+
     public static Spawner instance;
 
     [Range(0, 1), Tooltip("What proportion of objects should be active at any given time")]
@@ -27,15 +29,27 @@ public class Spawner : MonoBehaviourPun
 
     void Update()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-
-        // Enables objects randomly until the threshhold is met
-        while ((float)inactiveAmmoRefuels.Count / allAmmoRefuels.Count > spawnProportion)
+        if (gamemode == Gamemode.Multiplayer)
         {
-            // inactiveObjects.Count - 1 prevents the game from respawning the most recently despawned
-            AmmoRefuel selection = inactiveAmmoRefuels[Random.Range(0, inactiveAmmoRefuels.Count - 1)];
-            selection.photonView.RPC("SetState", RpcTarget.AllBufferedViaServer, true);
-            inactiveAmmoRefuels.Remove(selection);
+            if (!PhotonNetwork.IsMasterClient) return;
+
+            // Enables objects randomly until the threshhold is met
+            while ((float)inactiveAmmoRefuels.Count / allAmmoRefuels.Count > spawnProportion)
+            {
+                // inactiveObjects.Count - 1 prevents the game from respawning the most recently despawned
+                AmmoRefuel selection = inactiveAmmoRefuels[Random.Range(0, inactiveAmmoRefuels.Count - 1)];
+                selection.photonView.RPC("SetState", RpcTarget.AllBufferedViaServer, true);
+                inactiveAmmoRefuels.Remove(selection);
+            }
+        }
+        else if (gamemode == Gamemode.Singleplayer)
+        {
+            while ((float)inactiveAmmoRefuels.Count / allAmmoRefuels.Count > spawnProportion)
+            {
+                AmmoRefuel selection = inactiveAmmoRefuels[Random.Range(0, inactiveAmmoRefuels.Count - 1)];
+                selection.gameObject.SetActive(true);
+                inactiveAmmoRefuels.Remove(selection);
+            }
         }
     }
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
-using System.Net.Sockets;
 using System.Linq;
 
 public class GameManagerMultiplayer : MonoBehaviour
