@@ -22666,7 +22666,8 @@ MonoBehaviour:
   currentHealth: 100
   maxHealth: 100
   timeBetweenShots: 1
-  ammo: 10
+  currentAmmo: 10
+  maxAmmo: 15
   projectilePrefab: {fileID: 7134402322457835175, guid: c64189cf80c4c8649bea57a07b606931,
     type: 3}
 --- !u!1001 &1251273783
@@ -37804,7 +37805,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2053410612
 Transform:
   m_ObjectHideFlags: 0
