@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System.IO;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -50,10 +51,15 @@ public class Projectile : MonoBehaviour
 
         // Check whether the other object hit is a player
         Player hitPlayer = collision.transform.GetComponentInParent<Player>();
+        Target t = collision.transform.GetComponent<Target>();
 
         // Not a player
         if (hitPlayer == null)
         {
+            if (t != null)
+            {
+                life = lifetime;
+            }
             // Freeze the projectile and exit
             stuck = true;
             rb.isKinematic = true;

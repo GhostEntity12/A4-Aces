@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.Rendering;
@@ -41,6 +42,14 @@ public class Player : MonoBehaviourPun, IPunObservable
     [Tooltip("The prefab that prjectiles are spawned from")]
     public GameObject projectilePrefab;
 
+    [Header("Tiling")]
+    [SerializeField]
+    Vector2Int dimensions = new Vector2Int(1, 1);
+
+    float xJump, yJump;
+
+    Renderer r;
+
 
     private void Awake()
     {
@@ -54,11 +63,13 @@ public class Player : MonoBehaviourPun, IPunObservable
                 }
 
                 DoChecks();
+                photonView.RPC("ChangeMaterial", RpcTarget.AllBufferedViaServer);
             }
         }
         else if (mode == Gamemode.Singleplayer)
         {
             DoChecks();
+            ChangeMaterial();
         }
     }
 
@@ -66,6 +77,10 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         // Setting variables
         movement = GetComponent<PlayerMovement>();
+        ui = GetComponent<PlayerUI>();
+        r = movement.plane.GetComponent<Renderer>();
+        xJump = 1f / dimensions.x;
+        yJump = 1f / dimensions.y;
 
         // Error checking
         Projectile projectileScript = projectilePrefab.GetComponent<Projectile>();
@@ -120,7 +135,9 @@ public class Player : MonoBehaviourPun, IPunObservable
                 // Ignore collisions between the projectile and the owner
                 Physics.IgnoreCollision(movement.plane.GetComponent<Collider>(), projectile.GetComponent<Collider>());
                 // Randomise projectile color
-                projectile.GetComponent<Renderer>().materials[0].color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+                Color c = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+                projectile.GetComponent<Renderer>().materials[0].color = c;
+                projectile.GetComponent<Renderer>().materials[0].SetColor("_EmissionColor", c);
                 // Reduce ammo
                 currentAmmo--;
             }
@@ -135,7 +152,13 @@ public class Player : MonoBehaviourPun, IPunObservable
     public void AddScore(int scoreToAdd)
     {
         score += scoreToAdd;
-        // TODO: Update Score UI
+        ui.UpdateScore(score);
+    }
+
+    public void TakeDamage(float damageToTake)
+    {
+        currentHealth -= damageToTake;
+        ui.UpdateHealth();
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -150,5 +173,14 @@ public class Player : MonoBehaviourPun, IPunObservable
             // Network player, receive data
             this.currentHealth = (float)stream.ReceiveNext();
         }
+    }
+
+    [PunRPC]
+    void ChangeMaterial()
+    {
+        int position = Random.Range(0, dimensions.x * dimensions.y);
+        int xPos = Mathf.FloorToInt(position / dimensions.x);
+        int yPos = position % dimensions.y;
+        r.material.SetTextureOffset("_MainTex", new Vector2(xPos * xJump, yPos * yJump));
     }
 }

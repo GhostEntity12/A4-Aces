@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System;
-using System.Linq;
 
 public class PlayerUI : MonoBehaviour
 {
@@ -12,6 +8,7 @@ public class PlayerUI : MonoBehaviour
 
     public Image healthbar;
     public Image[] ammo;
+    public TextMeshProUGUI score;
 
     private void Awake()
     {
@@ -21,16 +18,15 @@ public class PlayerUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     private void Update()
     {
-        UpdateHealth();
         UpdateAmmo();
     }
 
-    private void UpdateHealth()
+    public void UpdateHealth()
     {
         healthbar.fillAmount = p.currentHealth / p.maxHealth;
     }
@@ -41,5 +37,10 @@ public class PlayerUI : MonoBehaviour
         {
             ammo[i].gameObject.SetActive(p.currentAmmo > i);
         }
+    }
+
+    public void UpdateScore(int _score)
+    {
+        score.text = $"Score: {_score}";
     }
 }
