@@ -9,7 +9,7 @@ public class GameManagerMultiplayer : MonoBehaviour
 {
     public static GameManagerMultiplayer instance;
 
-    public GameObject[] planes;
+    public GameObject plane;
 
     public List<GameObject> spawnPoints;
 
@@ -22,10 +22,11 @@ public class GameManagerMultiplayer : MonoBehaviour
     void Start()
     {
         spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoints").ToList();
+        print(spawnPoints.Count);
 
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)].transform;
 
-        GameObject player = PhotonNetwork.Instantiate(planes[Random.Range(0, planes.Length)].name, spawnPoint.position, spawnPoint.rotation);
+        GameObject player = PhotonNetwork.Instantiate(plane.name, spawnPoint.position, spawnPoint.rotation);
         player.GetComponent<Player>().mode = Gamemode.Multiplayer;
     }
 

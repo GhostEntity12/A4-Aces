@@ -3,7 +3,7 @@ using System.IO;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviourPun
 {
     public Gamemode gamemode;
     public Player owner;
@@ -14,11 +14,21 @@ public class Projectile : MonoBehaviour
     float life = 0f;
     public Rigidbody rb;
     bool stuck;
+    Renderer r;
 
     private void Awake()
     {
         // Setting variables
         rb = GetComponent<Rigidbody>();
+        r = GetComponent<Renderer>();
+        if (gamemode == Gamemode.Singleplayer)
+        {
+            RandomiseColor();
+        }
+        else
+        {
+            photonView.RPC("RandomiseColor", RpcTarget.AllBufferedViaServer);
+        }
     }
 
     private void Update()
@@ -73,5 +83,14 @@ public class Projectile : MonoBehaviour
             // Destroys the object next frame (see Update)
             life = lifetime;
         }
+    }
+
+    [PunRPC]
+    void RandomiseColor()
+    {
+        // Randomise projectile color
+        Color c = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        r.materials[0].color = c;
+        r.materials[0].SetColor("_EmissionColor", c);
     }
 }
