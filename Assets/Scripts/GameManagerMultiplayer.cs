@@ -24,10 +24,8 @@ public class GameManagerMultiplayer : MonoBehaviourPunCallbacks
         spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoints").ToList();
         print(spawnPoints.Count);
 
-        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)].transform;
-
-        GameObject player = PhotonNetwork.Instantiate(plane.name, spawnPoint.position, spawnPoint.rotation);
-        player.GetComponent<Player>().mode = Gamemode.Multiplayer;
+        SpawnNewPlayer();
+        
     }
 
     public void LeaveRoom()
@@ -41,5 +39,19 @@ public class GameManagerMultiplayer : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void SpawnNewPlayer(GameObject oldPlayer = null)
+    {
+        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)].transform;
+
+        GameObject player = PhotonNetwork.Instantiate(plane.name, spawnPoint.position, spawnPoint.rotation);
+
+        player.GetComponent<Player>().mode = Gamemode.Multiplayer;
+
+        if (oldPlayer == null)
+        {
+            PhotonNetwork.Destroy(oldPlayer);
+        }
     }
 }
