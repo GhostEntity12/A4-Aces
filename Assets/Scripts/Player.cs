@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.Rendering;
+using TMPro;
 
 public enum Gamemode
 {
@@ -51,7 +52,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     Renderer r;
 
 
-    private void Awake()
+    private void Start()
     {
         if (mode == Gamemode.Multiplayer)
         {
@@ -112,12 +113,13 @@ public class Player : MonoBehaviourPun, IPunObservable
             movement.cacheCamStartPos = movement.cameraPosTf.position;
             movement.cacheCamEndPos = movement.cameraPosTf.position + movement.cameraRotTf.forward * 1.5f;
             movement.cacheSpeed = movement.plane.transform.forward * movement.moveSpeed;
+            Invoke("DeathScreen", movement.deathTime + 0.5f);
         }
 
         if (shootTimer >= timeBetweenShots && currentAmmo > 0)
         {
             // On tap
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) && photonView.IsMine)
             {
                 // Resets timer
                 shootTimer = 0;
@@ -178,5 +180,28 @@ public class Player : MonoBehaviourPun, IPunObservable
         int xPos = Mathf.FloorToInt(position / dimensions.x);
         int yPos = position % dimensions.y;
         r.material.SetTextureOffset("_MainTex", new Vector2(xPos * xJump, yPos * yJump));
+    }
+
+    void DeathScreen()
+    {
+        GameObject dc = ui.DeathCanvas;
+        dc.transform.rotation = Quaternion.Euler(0, movement.cameraRotTf.rotation.y, 0);
+        dc.transform.SetParent(transform.root);
+        dc.SetActive(true);
+        TextMeshPro[] gameOverElements = dc.GetComponentsInChildren<TextMeshPro>();
+        foreach (TextMeshPro text in gameOverElements)
+        {
+            Fade.FadeElement(text, 0.5f, 0, 1);
+        }
+    }
+
+    public void Quit()
+    {
+        GameManagerMultiplayer.instance.LeaveRoom();
+    }
+
+    public void Respawn()
+    {
+
     }
 }

@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 cacheCamEndPos;
     [HideInInspector]
     public float deathProgress = 0;
-    public float deathTime = 5;
+    public float deathTime = 3;
 
     // Start is called before the first frame update
     void Start()

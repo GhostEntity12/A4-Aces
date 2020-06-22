@@ -32,6 +32,7 @@ public class MenuManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Awake()
     {
+        Application.targetFrameRate = Mathf.Min(60, Screen.currentResolution.refreshRate);
         activeStage = gamemode;
         gameVersion = Application.version;
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -101,5 +102,10 @@ public class MenuManager : MonoBehaviourPunCallbacks
     public void LoadSingleplayer(int level)
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(levelNames[level] + singleplayerSuffix);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }

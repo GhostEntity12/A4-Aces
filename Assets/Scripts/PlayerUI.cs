@@ -10,6 +10,8 @@ public class PlayerUI : MonoBehaviour
     public Image[] ammo;
     public TextMeshProUGUI score;
 
+    public GameObject DeathCanvas;
+
     private void Awake()
     {
         p = GetComponent<Player>();
@@ -18,7 +20,10 @@ public class PlayerUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        if (p.mode == Gamemode.Multiplayer)
+        {
+            score.gameObject.SetActive(false);
+        }
     }
 
     private void Update()

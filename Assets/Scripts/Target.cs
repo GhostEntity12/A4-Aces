@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
-    [SerializeField]
-    int score;
+    public int score;
     public Spawner s;
     private void OnCollisionEnter(Collision collision)
     {

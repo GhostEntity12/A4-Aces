@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5381041746594735379}
   - component: {fileID: 2543845211269828155}
   m_Layer: 0
-  m_Name: Watercoolier
+  m_Name: Watercooler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

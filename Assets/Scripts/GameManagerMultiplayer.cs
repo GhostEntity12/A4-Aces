@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using Photon.Pun;
 using System.Linq;
 
-public class GameManagerMultiplayer : MonoBehaviour
+public class GameManagerMultiplayer : MonoBehaviourPunCallbacks
 {
     public static GameManagerMultiplayer instance;
 
@@ -38,7 +38,7 @@ public class GameManagerMultiplayer : MonoBehaviour
     /// <summary>
     /// Called when the local player left the room. We need to load the launcher scene.
     /// </summary>
-    public void OnLeftRoom()
+    public override void OnLeftRoom()
     {
         SceneManager.LoadScene(0);
     }

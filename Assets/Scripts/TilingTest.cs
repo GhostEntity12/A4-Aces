@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class TilingTest : MonoBehaviour
 {
-    [SerializeField]
-    GameObject tilingObject;
+    public GameObject tilingObject;
 
     [SerializeField]
     Vector2Int dimensions;

@@ -129,7 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gamemode: 0
   owner: {fileID: 0}
-  speed: 5
+  speed: 10
   damage: 10
   lifetime: 40
   rb: {fileID: 0}
