@@ -134,10 +134,14 @@ public class Player : MonoBehaviourPun, IPunObservable
                 projectile.GetComponent<Projectile>().gamemode = mode;
                 // Ignore collisions between the projectile and the owner
                 Physics.IgnoreCollision(movement.plane.GetComponent<Collider>(), projectile.GetComponent<Collider>());
-                // Randomise projectile color
-                Color c = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-                projectile.GetComponent<Renderer>().materials[0].color = c;
-                projectile.GetComponent<Renderer>().materials[0].SetColor("_EmissionColor", c);
+                if (mode == Gamemode.Singleplayer)
+                {
+                    RandomiseColor(projectile.GetComponent<Renderer>());
+                }
+                else
+                {
+                    photonView.RPC("RandomiseColor", RpcTarget.AllBufferedViaServer, new object[] { projectile.GetComponent<Renderer>()});
+                }
                 // Reduce ammo
                 currentAmmo--;
             }
@@ -182,5 +186,14 @@ public class Player : MonoBehaviourPun, IPunObservable
         int xPos = Mathf.FloorToInt(position / dimensions.x);
         int yPos = position % dimensions.y;
         r.material.SetTextureOffset("_MainTex", new Vector2(xPos * xJump, yPos * yJump));
+    }
+
+    [PunRPC]
+    void RandomiseColor(Renderer projectileRenderer)
+    {
+        // Randomise projectile color
+        Color c = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        projectileRenderer.materials[0].color = c;
+        projectileRenderer.materials[0].SetColor("_EmissionColor", c);
     }
 }

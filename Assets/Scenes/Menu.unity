@@ -750,8 +750,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelNames:
-  - James
-  - Noah
+  - Office1
+  - Office2
   singleplayerSuffix: SP
   activeStage: {fileID: 0}
   gamemode: {fileID: 231886694}

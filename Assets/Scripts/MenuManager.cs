@@ -100,6 +100,6 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
     public void LoadSingleplayer(int level)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(levelNames[level]);// + singleplayerSuffix);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(levelNames[level] + singleplayerSuffix);
     }
 }

@@ -3668,8 +3668,8 @@ MonoBehaviour:
   mode: 0
   currentHealth: 100
   maxHealth: 100
-  timeBetweenShots: 1
-  currentAmmo: 10
+  timeBetweenShots: 0.3
+  currentAmmo: 15
   maxAmmo: 15
   projectilePrefab: {fileID: 7590428819389915598, guid: 925591bf1e7d1fd4fb106d3d50e9d3de,
     type: 3}

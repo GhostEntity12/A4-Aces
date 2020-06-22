@@ -35,7 +35,6 @@ public class PlayerDamage : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        print(collision.transform.name);
         if (!recentlyTookDamage)
         {
             float damageAmount;
@@ -48,11 +47,6 @@ public class PlayerDamage : MonoBehaviour
             {
                 damageAmount = 10;
             }
-
-            //if (collision.transform.CompareTag()
-            //{
-
-            //}
 
             p.TakeDamage(damageAmount);
             recentlyTookDamage = true;

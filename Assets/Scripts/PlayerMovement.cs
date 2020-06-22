@@ -64,7 +64,6 @@ public class PlayerMovement : MonoBehaviour
             deathProgress += Time.fixedDeltaTime / deathTime;
             if (deathProgress < deathTime)
             {
-                print(planeRb.velocity);
                 cameraPosTf.position = Vector3.MoveTowards(cameraPosTf.position, cacheCamEndPos, 0.7f * Time.fixedDeltaTime);
                 planeRb.velocity = planeTf.forward * Mathf.SmoothStep(moveSpeed, 0f, deathProgress);
                 planeRb.velocity += Physics.gravity * Mathf.Lerp(0, 1, deathProgress);
