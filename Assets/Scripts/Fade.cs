@@ -8,7 +8,8 @@ using UnityEngine;
 /// </summary>
 public static class Fade
 {
-    public delegate void CallbackDelegate(int intIn);
+    public delegate void CallbackDelegateInt(int intIn);
+    public delegate void CallbackDelegateNull();
 
     /// <summary>
     /// Fades a TextMeshPro element to a given transparency
@@ -51,7 +52,7 @@ public static class Fade
     /// <param name="end">The ending transparency</param>
     /// <param name="delay">The time to wait before fading</param>
     /// <returns></returns>
-    public static IEnumerator FadeElement(CanvasGroup cg, float lerpTime, float start, float end, float delay = 0f, CallbackDelegate callback = null, int callbackInt = 0)
+    public static IEnumerator FadeElement(CanvasGroup cg, float lerpTime, float start, float end, float delay = 0f)
     {
         // Wait for delay
         yield return new WaitForSeconds(delay);
@@ -74,12 +75,21 @@ public static class Fade
             cg.alpha = currentValue;
             yield return new WaitForEndOfFrame();
         }
-
-        if (!(callback is null))
-        {
-            callback(callbackInt);
-        }
     }
+    public static IEnumerator FadeElement(CanvasGroup cg, float lerpTime, float start, float end, CallbackDelegateInt callback, int callbackInt, float delay = 0f)
+    {
+        yield return FadeElement(cg: cg, lerpTime: lerpTime, start: start, end: end, delay: delay);
+
+        callback(callbackInt);
+    }
+
+    public static IEnumerator FadeElement(CanvasGroup cg, float lerpTime, float start, float end, CallbackDelegateNull callback, float delay = 0f)
+    {
+        yield return FadeElement(cg: cg, lerpTime: lerpTime, start: start, end: end, delay: delay);
+
+        callback();
+    }
+
 
     /// <summary>
     /// Fades a Material to a given transparency

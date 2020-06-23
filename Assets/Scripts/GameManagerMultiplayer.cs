@@ -18,14 +18,13 @@ public class GameManagerMultiplayer : MonoBehaviourPunCallbacks
     GameObject player;
 
     [SerializeField]
-    GameObject drCamera;
+    CanvasGroup fade;
 
-    CanvasGroup cg;
+    public GvrPointerPhysicsRaycaster deathRoomRaycast;
 
     private void Awake()
     {
         instance = this;
-        cg = drCamera.GetComponentInChildren<CanvasGroup>();
     }
 
     // Start is called before the first frame update
@@ -34,7 +33,6 @@ public class GameManagerMultiplayer : MonoBehaviourPunCallbacks
         spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoints").ToList();
 
         SpawnNewPlayer();
-        
     }
 
     public void LeaveRoom()
@@ -47,14 +45,19 @@ public class GameManagerMultiplayer : MonoBehaviourPunCallbacks
     /// </summary>
     public override void OnLeftRoom()
     {
-        SceneManager.LoadScene(0);
+        StartCoroutine(Fade.FadeElement(fade, 1, 0, 1, callback: SceneManager.LoadScene, callbackInt: 0));
     }
 
     public void PlayerDied()
     {
+        deathRoomRaycast.eventMask = ~0;
         PhotonNetwork.Destroy(player);
-        StartCoroutine(Fade.FadeElement(cg, 1, 1, 0));
-        drCamera.SetActive(true);
+        StartCoroutine(Fade.FadeElement(fade, 0.6f, 1, 0));
+    }
+
+    public void SpawnDelegate()
+    {
+        StartCoroutine(Fade.FadeElement(fade, 1, 0, 1, callback: SpawnNewPlayer));
     }
 
     public void SpawnNewPlayer()
@@ -63,10 +66,14 @@ public class GameManagerMultiplayer : MonoBehaviourPunCallbacks
 
         GameObject newPlayer = PhotonNetwork.Instantiate(plane.name, spawnPoint.position, spawnPoint.rotation);
 
-        drCamera.SetActive(false);
+        Player p = newPlayer.GetComponent<Player>();
 
-        newPlayer.GetComponent<Player>().mode = Gamemode.Multiplayer;
+        p.mode = Gamemode.Multiplayer;
+
+        deathRoomRaycast.eventMask = 0;
 
         player = newPlayer;
+
+        fade.alpha = 1;
     }
 }

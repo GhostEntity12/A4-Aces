@@ -36,7 +36,7 @@ public class GameManagerSingleplayer : MonoBehaviour
 
     public void LeaveRoom()
     {
-        StartCoroutine(Fade.FadeElement(fade, 1, 0, 1, callback: new Fade.CallbackDelegate(SceneManager.LoadScene), callbackInt: 0));
+        StartCoroutine(Fade.FadeElement(fade, 1, 0, 1, callback: new Fade.CallbackDelegateInt(SceneManager.LoadScene), callbackInt: 0));
     }
 
     public void PlayerDied()
@@ -44,6 +44,11 @@ public class GameManagerSingleplayer : MonoBehaviour
         deathRoomRaycast.eventMask = ~0;
         Destroy(player);
         StartCoroutine(Fade.FadeElement(fade, 0.6f, 1, 0));
+    }
+
+    public void SpawnDelegate()
+    {
+        StartCoroutine(Fade.FadeElement(fade, 1, 0, 1, callback: SpawnNewPlayer));
     }
 
     public void SpawnNewPlayer()
@@ -59,5 +64,7 @@ public class GameManagerSingleplayer : MonoBehaviour
         deathRoomRaycast.eventMask = 0;
 
         player = newPlayer;
+
+        fade.alpha = 1;
     }
 }
