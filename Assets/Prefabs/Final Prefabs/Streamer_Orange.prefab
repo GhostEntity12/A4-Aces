@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6512045616649103134}
   - component: {fileID: 2811486706426797352}
   - component: {fileID: 8374691069941948881}
+  - component: {fileID: -7653681680475618019}
   m_Layer: 0
   m_Name: Streamer_Orange
   m_TagString: Untagged
@@ -79,3 +80,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &-7653681680475618019
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7783406685943797005}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 14.071192, y: 258.5349, z: 0.69091797}
+  m_Center: {x: 0, y: -129.26746, z: 0}

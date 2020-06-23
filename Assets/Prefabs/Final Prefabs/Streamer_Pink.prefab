@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9167813282155798914}
   - component: {fileID: 171588841697582004}
   - component: {fileID: 5862862421357881165}
+  - component: {fileID: 4168230425547441557}
   m_Layer: 0
   m_Name: Streamer_Pink
   m_TagString: Untagged
@@ -79,3 +80,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &4168230425547441557
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5287723231927063441}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10.827957, y: 258.5349, z: 0.69085693}
+  m_Center: {x: 0, y: -129.26746, z: 0.000030517578}

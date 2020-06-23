@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1110688026717381911}
   - component: {fileID: 8228905960036097825}
   - component: {fileID: 2381976718119281624}
+  - component: {fileID: 4043240856945120731}
   m_Layer: 0
   m_Name: Cubicle_Middle
   m_TagString: Untagged
@@ -79,3 +80,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &4043240856945120731
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4121547068371244804}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 200, y: 205.44997, z: 18.249207}
+  m_Center: {x: -100, y: 102.72498, z: -3.6583557}
