@@ -14,6 +14,13 @@ public class GameManagerSingleplayer : MonoBehaviour
 
     public GameObject deathRoom;
 
+    GameObject player;
+
+    [SerializeField]
+    CanvasGroup fade;
+
+    public GvrPointerPhysicsRaycaster deathRoomRaycast;
+
     private void Awake()
     {
         instance = this;
@@ -24,14 +31,33 @@ public class GameManagerSingleplayer : MonoBehaviour
     {
         spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoints").ToList();
 
-        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)].transform;
-
-        GameObject player = Instantiate(plane, spawnPoint.position, spawnPoint.rotation);
-        player.GetComponent<Player>().mode = Gamemode.Singleplayer;
+        SpawnNewPlayer();
     }
 
     public void LeaveRoom()
     {
-        SceneManager.LoadScene(0);
+        StartCoroutine(Fade.FadeElement(fade, 1, 0, 1, callback: new Fade.CallbackDelegate(SceneManager.LoadScene), callbackInt: 0));
+    }
+
+    public void PlayerDied()
+    {
+        deathRoomRaycast.eventMask = ~0;
+        Destroy(player);
+        StartCoroutine(Fade.FadeElement(fade, 0.6f, 1, 0));
+    }
+
+    public void SpawnNewPlayer()
+    {
+        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)].transform;
+
+        GameObject newPlayer = Instantiate(plane, spawnPoint.position, spawnPoint.rotation);
+
+        Player p = newPlayer.GetComponent<Player>();
+
+        p.mode = Gamemode.Singleplayer;
+
+        deathRoomRaycast.eventMask = 0;
+
+        player = newPlayer;
     }
 }

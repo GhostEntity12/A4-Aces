@@ -10,7 +10,7 @@ public class PlayerUI : MonoBehaviour
     public Image[] ammo;
     public TextMeshProUGUI score;
 
-    public CanvasGroup DeathCanvas;
+    public CanvasGroup deathCanvas;
 
     private void Awake()
     {
@@ -24,6 +24,7 @@ public class PlayerUI : MonoBehaviour
         {
             score.gameObject.SetActive(false);
         }
+        StartCoroutine(Fade.FadeElement(deathCanvas, 0.75f, 1, 0));
     }
 
     private void Update()

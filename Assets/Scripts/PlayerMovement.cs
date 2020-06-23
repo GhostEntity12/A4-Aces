@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,7 +11,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Camera")]
     public Transform cameraPosTf;
     public Transform cameraRotTf;
-    Vector3 camCache;
 
     [Header("Stats")]
     public float turnSpeed = 100f;
@@ -18,8 +18,8 @@ public class PlayerMovement : MonoBehaviour
     public float recoverySpeed = 5f;
 
     [Header("Movement")]
-    Quaternion rotDiff;
-    float size;
+    float angle;
+    public Vector2 cameraOffset;
 
     [Header("Death handling")]
     public bool controllable = true;
@@ -39,24 +39,21 @@ public class PlayerMovement : MonoBehaviour
         // Setting variables
         planeRb = plane.GetComponent<Rigidbody>();
         planeTf = plane.transform;
-        camCache = cameraPosTf.transform.position - planeTf.position;
         planeRb.angularDrag = recoverySpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        rotDiff = planeTf.rotation * Quaternion.Inverse(cameraRotTf.rotation);
-        Quaternion absRotDiff = new Quaternion(Mathf.Abs(cameraPosTf.rotation.x - rotDiff.x), Mathf.Abs(cameraPosTf.rotation.y - rotDiff.y), Mathf.Abs(cameraPosTf.rotation.z - rotDiff.z), 0); //cameraPosTf.rotation.w - rotDiff.w);
-        size = absRotDiff.x + absRotDiff.y + absRotDiff.z;
+        angle = Quaternion.Angle(planeTf.rotation, cameraRotTf.rotation);
     }
 
     private void FixedUpdate()
     {
         if (controllable)
         {
-            cameraPosTf.position = planeTf.position + planeTf.forward * camCache.z + planeTf.up * camCache.y;
-            planeTf.rotation = Quaternion.RotateTowards(planeTf.rotation, cameraRotTf.rotation, turnSpeed * size * Time.fixedDeltaTime);
+            cameraPosTf.position = planeTf.position + planeTf.forward * cameraOffset.x + planeTf.up * cameraOffset.y;
+            planeTf.rotation = Quaternion.RotateTowards(planeTf.rotation, cameraRotTf.rotation, (turnSpeed * angle * Time.fixedDeltaTime) + 0.1f);
             planeRb.velocity = planeTf.forward * moveSpeed;
         }
         else

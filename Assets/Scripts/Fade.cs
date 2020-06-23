@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public static class Fade
 {
+    public delegate void CallbackDelegate(int intIn);
+
     /// <summary>
     /// Fades a TextMeshPro element to a given transparency
     /// </summary>
@@ -48,7 +51,7 @@ public static class Fade
     /// <param name="end">The ending transparency</param>
     /// <param name="delay">The time to wait before fading</param>
     /// <returns></returns>
-    public static IEnumerator FadeElement(CanvasGroup cg, float lerpTime, float start, float end, float delay = 0f)
+    public static IEnumerator FadeElement(CanvasGroup cg, float lerpTime, float start, float end, float delay = 0f, CallbackDelegate callback = null, int callbackInt = 0)
     {
         // Wait for delay
         yield return new WaitForSeconds(delay);
@@ -70,6 +73,11 @@ public static class Fade
             // Setting the transparency
             cg.alpha = currentValue;
             yield return new WaitForEndOfFrame();
+        }
+
+        if (!(callback is null))
+        {
+            callback(callbackInt);
         }
     }
 

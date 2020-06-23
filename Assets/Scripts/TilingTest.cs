@@ -12,6 +12,9 @@ public class TilingTest : MonoBehaviour
 
     [Range(0,15)]
     public int position;
+
+    [SerializeField]
+    int selections;
     
     float xJump, yJump;
 
@@ -28,12 +31,12 @@ public class TilingTest : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            position = (position + 15) % 16;
+            position = (position + selections - 1) % selections;
             UpdateTexture();
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            position = (position + 17) % 16;
+            position = (position + selections + 1) % selections;
             UpdateTexture();
         }
     }

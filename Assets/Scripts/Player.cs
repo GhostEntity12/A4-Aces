@@ -47,7 +47,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     [Header("Tiling")]
     [SerializeField]
     Vector2Int dimensions = new Vector2Int(1, 1);
-
+    [SerializeField]
+    int varietyCount;
     float xJump, yJump;
 
     Renderer r;
@@ -70,6 +71,10 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
         else if (mode == Gamemode.Singleplayer)
         {
+            foreach (Behaviour behaviour in playerInputsAndBehaviours)
+            {
+                behaviour.enabled = true;
+            }
             DoChecks();
             ChangeMaterial();
         }
@@ -114,17 +119,15 @@ public class Player : MonoBehaviourPun, IPunObservable
             movement.cacheCamStartPos = movement.cameraPosTf.position;
             movement.cacheCamEndPos = movement.cameraPosTf.position + movement.cameraRotTf.forward * 1.5f;
             movement.cacheSpeed = movement.plane.transform.forward * movement.moveSpeed;
-            StartCoroutine(Fade.FadeElement(ui.DeathCanvas, movement.deathTime, 0, 1));
+            StartCoroutine(Fade.FadeElement(ui.deathCanvas, movement.deathTime, 0, 1));
             Invoke("DeathRoom", movement.deathTime + 0.5f);
         }
 
         if (shootTimer >= timeBetweenShots && currentAmmo > 0)
         {
-            print("a" + photonView.IsMine);
             // On tap
             if (Input.GetMouseButton(0) && (photonView.IsMine || !PhotonNetwork.IsConnected)) 
             {
-                print("Tap");
                 // Resets timer
                 shootTimer = 0;
 
@@ -148,7 +151,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             // Increments timer
             shootTimer += Time.deltaTime;
-            print("Timer");
         }
     }
 
@@ -181,7 +183,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     [PunRPC]
     void ChangeMaterial()
     {
-        int position = Random.Range(0, dimensions.x * dimensions.y);
+        int position = Random.Range(0, varietyCount);
         int xPos = Mathf.FloorToInt(position / dimensions.x);
         int yPos = position % dimensions.y;
         r.material.SetTextureOffset("_MainTex", new Vector2(xPos * xJump, yPos * yJump));
@@ -199,18 +201,13 @@ public class Player : MonoBehaviourPun, IPunObservable
         //    StartCoroutine(Fade.FadeElement(text, 0.5f, 0, 1));
         //}
 
-        movement.cameraPosTf.position = (mode == Gamemode.Multiplayer ? GameManagerMultiplayer.instance.deathRoom : GameManagerSingleplayer.instance.deathRoom).transform.position;
-        StartCoroutine(Fade.FadeElement(ui.DeathCanvas, 1, 1, 0));
-
-    }
-
-    public void Quit()
-    {
-        GameManagerMultiplayer.instance.LeaveRoom();
-    }
-
-    public void Respawn()
-    {
-
+        if (mode == Gamemode.Singleplayer)
+        {
+            GameManagerSingleplayer.instance.PlayerDied();
+        }
+        else
+        {
+            GameManagerMultiplayer.instance.PlayerDied();
+        }
     }
 }
