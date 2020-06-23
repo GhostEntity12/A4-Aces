@@ -10,7 +10,7 @@ public class PlayerUI : MonoBehaviour
     public Image[] ammo;
     public TextMeshProUGUI score;
 
-    public GameObject DeathCanvas;
+    public CanvasGroup DeathCanvas;
 
     private void Awake()
     {

@@ -13,6 +13,8 @@ public class GameManagerMultiplayer : MonoBehaviourPunCallbacks
 
     public List<GameObject> spawnPoints;
 
+    public GameObject deathRoom;
+
     private void Awake()
     {
         instance = this;
@@ -49,7 +51,7 @@ public class GameManagerMultiplayer : MonoBehaviourPunCallbacks
 
         player.GetComponent<Player>().mode = Gamemode.Multiplayer;
 
-        if (oldPlayer == null)
+        if (oldPlayer != null)
         {
             PhotonNetwork.Destroy(oldPlayer);
         }

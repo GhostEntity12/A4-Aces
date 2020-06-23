@@ -29,6 +29,9 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
     bool isConnecting;
 
+    [SerializeField]
+    CanvasGroup cg;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -40,6 +43,7 @@ public class MenuManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.Disconnect();
         }
+        StartCoroutine(Fade.FadeElement(cg, 1, 1, 0));
     }
 
     public void ReturnToMain()

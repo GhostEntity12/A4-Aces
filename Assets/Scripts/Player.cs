@@ -114,7 +114,8 @@ public class Player : MonoBehaviourPun, IPunObservable
             movement.cacheCamStartPos = movement.cameraPosTf.position;
             movement.cacheCamEndPos = movement.cameraPosTf.position + movement.cameraRotTf.forward * 1.5f;
             movement.cacheSpeed = movement.plane.transform.forward * movement.moveSpeed;
-            Invoke("DeathScreen", movement.deathTime + 0.5f);
+            StartCoroutine(Fade.FadeElement(ui.DeathCanvas, movement.deathTime, 0, 1));
+            Invoke("DeathRoom", movement.deathTime + 0.5f);
         }
 
         if (shootTimer >= timeBetweenShots && currentAmmo > 0)
@@ -186,17 +187,21 @@ public class Player : MonoBehaviourPun, IPunObservable
         r.material.SetTextureOffset("_MainTex", new Vector2(xPos * xJump, yPos * yJump));
     }
 
-    void DeathScreen()
+    void DeathRoom()
     {
-        GameObject dc = ui.DeathCanvas;
-        dc.transform.rotation = Quaternion.Euler(0, movement.cameraRotTf.rotation.y, 0);
-        dc.transform.SetParent(transform.root);
-        dc.SetActive(true);
-        TextMeshPro[] gameOverElements = dc.GetComponentsInChildren<TextMeshPro>();
-        foreach (TextMeshPro text in gameOverElements)
-        {
-            Fade.FadeElement(text, 0.5f, 0, 1);
-        }
+        //GameObject dc = ui.DeathCanvas;
+        //dc.transform.rotation = Quaternion.Euler(0, movement.cameraRotTf.rotation.y, 0);
+        //dc.transform.SetParent(transform.root);
+        //dc.SetActive(true);
+        //TextMeshPro[] gameOverElements = dc.GetComponentsInChildren<TextMeshPro>();
+        //foreach (TextMeshPro text in gameOverElements)
+        //{
+        //    StartCoroutine(Fade.FadeElement(text, 0.5f, 0, 1));
+        //}
+
+        movement.cameraPosTf.position = (mode == Gamemode.Multiplayer ? GameManagerMultiplayer.instance.deathRoom : GameManagerSingleplayer.instance.deathRoom).transform.position;
+        StartCoroutine(Fade.FadeElement(ui.DeathCanvas, 1, 1, 0));
+
     }
 
     public void Quit()

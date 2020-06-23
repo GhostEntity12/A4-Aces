@@ -12,6 +12,8 @@ public class GameManagerSingleplayer : MonoBehaviour
 
     public List<GameObject> spawnPoints;
 
+    public GameObject deathRoom;
+
     private void Awake()
     {
         instance = this;
