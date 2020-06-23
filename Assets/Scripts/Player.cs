@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.Rendering;
 using TMPro;
+using System.Threading;
 
 public enum Gamemode
 {
@@ -118,9 +119,11 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (shootTimer >= timeBetweenShots && currentAmmo > 0)
         {
+            print("a" + photonView.IsMine);
             // On tap
-            if (Input.GetMouseButton(0) && photonView.IsMine)
+            if (Input.GetMouseButton(0) && (photonView.IsMine || !PhotonNetwork.IsConnected)) 
             {
+                print("Tap");
                 // Resets timer
                 shootTimer = 0;
 
@@ -144,6 +147,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             // Increments timer
             shootTimer += Time.deltaTime;
+            print("Timer");
         }
     }
 

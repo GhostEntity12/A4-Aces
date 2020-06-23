@@ -88,9 +88,10 @@ public class Projectile : MonoBehaviourPun
     [PunRPC]
     void RandomiseColor()
     {
+        print("a");
         // Randomise projectile color
         Color c = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-        r.materials[0].color = c;
-        r.materials[0].SetColor("_EmissionColor", c);
+        r.materials[1].color = c;
+        r.materials[1].SetColor("_EmissionColor", c);
     }
 }
