@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 1665667470828082406}
   - component: {fileID: 3000472185764420885}
   - component: {fileID: 7953360883010541081}
+  - component: {fileID: 8370243389227695501}
   m_Layer: 0
   m_Name: Cabinet_ShelfBottom
   m_TagString: Untagged
@@ -112,6 +113,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &8370243389227695501
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4476596278097713740}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 50, y: 35, z: 74.41456}
+  m_Center: {x: 0, y: 16.847023, z: -0.00000047683716}
 --- !u!1 &7301890816525693178
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,6 +137,7 @@ GameObject:
   - component: {fileID: 4993625246799204739}
   - component: {fileID: 3842291782916276384}
   - component: {fileID: 1867792964213739251}
+  - component: {fileID: 1853659812822239562}
   m_Layer: 0
   m_Name: Cabinet_ShelfTop
   m_TagString: Untagged
@@ -191,6 +206,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &1853659812822239562
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7301890816525693178}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 50, y: 35, z: 74.41456}
+  m_Center: {x: 0, y: 16.847023, z: -0.00000047683716}
 --- !u!1 &7533756424809680895
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,6 +230,7 @@ GameObject:
   - component: {fileID: 4596679515709938791}
   - component: {fileID: 7858660904341912024}
   - component: {fileID: 7373522673402825174}
+  - component: {fileID: 111597353317649068}
   m_Layer: 0
   m_Name: Cabinet 1
   m_TagString: Untagged
@@ -270,3 +299,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &111597353317649068
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7533756424809680895}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 60.000004, y: 80, z: 80}
+  m_Center: {x: 0, y: 40, z: 0}
