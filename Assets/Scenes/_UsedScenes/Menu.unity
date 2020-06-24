@@ -1736,7 +1736,7 @@ PrefabInstance:
     - target: {fileID: 4668538704824869136, guid: 856d5be5d92eaeb4484756c1b15491c5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.887
+      value: -2.398
       objectReference: {fileID: 0}
     - target: {fileID: 4668538704824869136, guid: 856d5be5d92eaeb4484756c1b15491c5,
         type: 3}
@@ -2645,6 +2645,7 @@ MonoBehaviour:
   connectingText: {fileID: 643072131}
   room: 
   cg: {fileID: 292428978}
+  gvrRaycaster: {fileID: 4105885167457417786}
 --- !u!4 &651854655
 Transform:
   m_ObjectHideFlags: 0

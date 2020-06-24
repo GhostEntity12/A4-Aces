@@ -2165,8 +2165,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 828694852}
-  - {fileID: 400886697}
   - {fileID: 2040966787}
+  - {fileID: 400886697}
   - {fileID: 1536449238}
   - {fileID: 18273290}
   - {fileID: 1961616300}
@@ -19398,6 +19398,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1435557671}
   - component: {fileID: 1435557672}
+  - component: {fileID: 1435557673}
   m_Layer: 0
   m_Name: Ammo
   m_TagString: Untagged
@@ -19489,6 +19490,28 @@ MonoBehaviour:
   - {fileID: 674668140}
   - {fileID: 1292964048}
   inactiveBehaviours: []
+--- !u!114 &1435557673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435557670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 29
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &1466300048
 PrefabInstance:
   m_ObjectHideFlags: 0

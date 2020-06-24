@@ -53,21 +53,27 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     Renderer r;
 
+    private void Awake()
+    {
+        foreach (Behaviour behaviour in playerInputsAndBehaviours)
+        {
+            behaviour.enabled = false;
+        }
+    }
+
 
     private void Start()
     {
-        if (mode == Gamemode.Multiplayer)
+        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
+        if (mode == Gamemode.Multiplayer && (photonView.IsMine || !PhotonNetwork.IsConnected))
         {
-            if (photonView.IsMine || !PhotonNetwork.IsConnected)
+            foreach (Behaviour behaviour in playerInputsAndBehaviours)
             {
-                foreach (Behaviour behaviour in playerInputsAndBehaviours)
-                {
-                    behaviour.enabled = true;
-                }
-
-                DoChecks();
-                photonView.RPC("ChangeMaterial", RpcTarget.AllBufferedViaServer);
+                behaviour.enabled = true;
             }
+
+            DoChecks();
+            photonView.RPC("ChangeMaterial", RpcTarget.AllBufferedViaServer);
         }
         else if (mode == Gamemode.Singleplayer)
         {
@@ -162,6 +168,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     public void TakeDamage(float damageToTake)
     {
+        if (!photonView.IsMine) return;
         currentHealth -= damageToTake;
         ui.UpdateHealth();
     }

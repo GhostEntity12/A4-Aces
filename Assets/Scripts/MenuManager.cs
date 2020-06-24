@@ -32,6 +32,9 @@ public class MenuManager : MonoBehaviourPunCallbacks
     [SerializeField]
     CanvasGroup cg;
 
+    [SerializeField]
+    GvrPointerPhysicsRaycaster gvrRaycaster;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -89,6 +92,7 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
     public void JoinRoom(int level)
     {
+        gvrRaycaster.eventMask = 0;
         room = levelNames[level];
         PhotonNetwork.JoinOrCreateRoom(room, new RoomOptions { MaxPlayers = 20 }, null);
     }
@@ -105,6 +109,7 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
     public void LoadSingleplayer(int level)
     {
+        gvrRaycaster.eventMask = 0;
         StartCoroutine(Fade.FadeElement(cg, 0.8f, 0, 1, UnityEngine.SceneManagement.SceneManager.LoadScene, levelNames[level] + singleplayerSuffix));
     }
 

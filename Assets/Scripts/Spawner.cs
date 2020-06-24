@@ -19,7 +19,6 @@ public class Spawner : MonoBehaviourPun
     void Awake()
     {
         type = allBehaviours[0].GetType();
-        print(type.ToString());
 
         List<MonoBehaviour> badBehaviours = new List<MonoBehaviour>();
         foreach (MonoBehaviour behaviour in allBehaviours)
