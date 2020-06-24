@@ -95,7 +95,7 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel(room);
+        StartCoroutine(Fade.FadeElement(cg, 0.8f, 0, 1, PhotonNetwork.LoadLevel, room));
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -105,7 +105,7 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
     public void LoadSingleplayer(int level)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(levelNames[level] + singleplayerSuffix);
+        StartCoroutine(Fade.FadeElement(cg, 0.8f, 0, 1, UnityEngine.SceneManagement.SceneManager.LoadScene, levelNames[level] + singleplayerSuffix));
     }
 
     public void Quit()

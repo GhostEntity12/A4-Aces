@@ -9,6 +9,7 @@ using UnityEngine;
 public static class Fade
 {
     public delegate void CallbackDelegateInt(int intIn);
+    public delegate void CallbackDelegateString(string stringIn);
     public delegate void CallbackDelegateNull();
 
     /// <summary>
@@ -88,6 +89,13 @@ public static class Fade
         yield return FadeElement(cg: cg, lerpTime: lerpTime, start: start, end: end, delay: delay);
 
         callback();
+    }
+
+    public static IEnumerator FadeElement(CanvasGroup cg, float lerpTime, float start, float end, CallbackDelegateString callback, string callbackString, float delay = 0f)
+    {
+        yield return FadeElement(cg: cg, lerpTime: lerpTime, start: start, end: end, delay: delay);
+
+        callback(callbackString);
     }
 
 
